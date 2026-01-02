@@ -18,6 +18,7 @@ entity Travel : managed {
   TotalPrice     : Decimal(16, 3) @readonly;
   CurrencyCode   : Currency;
   Description    : String(1024);
+  Progress       : Integer @readonly;
   TravelStatus   : Association to TravelStatus @readonly;
   to_Agency      : Association to TravelAgency;
   to_Customer    : Association to Passenger;
@@ -33,6 +34,7 @@ entity Booking : managed {
   FlightPrice       : Decimal(16, 3);
   CurrencyCode      : Currency;
   BookingStatus     : Association to BookingStatus;
+  TotalSupplPrice   : Decimal(16, 3);
   to_BookSupplement : Composition of many BookingSupplement on to_BookSupplement.to_Booking = $self;
   to_Carrier        : Association to Airline;
   to_Customer       : Association to Passenger;
@@ -78,6 +80,10 @@ entity TravelStatus : CodeList {
 }
 
 annotate Travel with @(
+Capabilities.DeleteRestrictions : {
+       $Type : 'Capabilities.DeleteRestrictionsType',
+      Deletable: TravelStatus.insertDeleteRestriction
+},
 Capabilities: {
 	FilterRestrictions : {FilterExpressionRestrictions : [{
 		Property	: 'BeginDate',
