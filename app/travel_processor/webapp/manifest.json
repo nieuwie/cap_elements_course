@@ -142,6 +142,33 @@
                             "controlConfiguration": {
                                 "@com.sap.vocabularies.UI.v1.SelectionFields": {
                                     "useSemanticDateRange": true
+                                },
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "quickVariantSelection": {
+                                            "paths": [
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#open"
+                                                },
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#accepted"
+                                                },
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#canceled"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "@com.sap.vocabularies.UI.v1.LineItem#tableView": {
+                                    "actions": {
+                                        "DataFieldForAction::TravelService.rejectTravel": {
+                                            "afterExecution": {
+                                                "enableAutoScroll": false,
+                                                "navigateToInstance": true
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "variantManagement": "Page",
@@ -154,7 +181,27 @@
                                     }
                                 }
                             },
-                            "hideFilterBar": false
+                            "hideFilterBar": false,
+                            "views": {
+                                "paths": [
+                                    {
+                                        "key": "tableView1",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1"
+                                    },
+                                    {
+                                        "key": "tableView2",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView2"
+                                    },
+                                    {
+                                        "key": "tableView3",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView3"
+                                    },
+                                    {
+                                        "key": "tableView",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                                    }
+                                ]
+                            }
                         }
                     },
                     "controlAggregation": "beginColumnPages",

@@ -130,12 +130,236 @@ annotate TravelService.Travel with @(
                 $Type: 'UI.DataField',
                 Value: EndDate
             }
-        ]}
+        ]},
+        SelectionVariant #canceled: {
+            $Type           : 'UI.SelectionVariantType',
+            ID              : 'canceled',
+            Text            : '{i18n>Canceled}',
+            Parameters      : [
+
+            ],
+            FilterExpression: '',
+            SelectOptions   : [{
+                $Type       : 'UI.SelectOptionType',
+                PropertyName: TravelStatus_code,
+                Ranges      : [{
+                    $Type : 'UI.SelectionRangeType',
+                    Sign  : #I,
+                    Option: #EQ,
+                    Low   : 'X',
+                }, ],
+            }, ],
+        },
+        SelectionVariant#open  : {
+            $Type : 'UI.SelectionVariantType',
+            ID : 'open',
+            Text : '{i18n>Open2}',
+            Parameters : [
+
+            ],             
+            FilterExpression : '',
+            SelectOptions : [
+                {
+                    $Type : 'UI.SelectOptionType',
+                    PropertyName : TravelStatus_code,
+                    Ranges : [
+                        {
+                            $Type : 'UI.SelectionRangeType',
+                            Sign : #I,
+                            Option : #EQ,
+                            Low : 'O',
+                        },
+                    ],
+                },
+            ],
+        },
+        SelectionVariant #accepted: {
+            $Type           : 'UI.SelectionVariantType',
+            ID              : 'accepted',
+            Text            : '{i18n>Accepted}',
+            Parameters      : [
+
+            ],
+            FilterExpression: '',
+            SelectOptions   : [{
+                $Type       : 'UI.SelectOptionType',
+                PropertyName: TravelStatus_code,
+                Ranges      : [{
+                    $Type : 'UI.SelectionRangeType',
+                    Sign  : #I,
+                    Option: #EQ,
+                    Low   : 'A',
+                }, ],
+            }, ],
+        }
     },
     UI.DataPoint #Progress : {
         Value : Progress,
         Visualization : #Progress,
         TargetValue : 100,
+    },
+    UI.SelectionPresentationVariant #tableView : {
+        $Type              : 'UI.SelectionPresentationVariantType',
+        PresentationVariant: ![@UI.PresentationVariant],
+        SelectionVariant   : {
+            $Type        : 'UI.SelectionVariantType',
+            SelectOptions: [],
+        },
+        Text               : '{i18n>Open}',
+    },
+    UI.SelectionPresentationVariant #tableView1: {
+        $Type              : 'UI.SelectionPresentationVariantType',
+        PresentationVariant: {
+            $Type         : 'UI.PresentationVariantType',
+            Visualizations: ['@UI.LineItem#tableView', ],
+        },
+        SelectionVariant   : {
+            $Type        : 'UI.SelectionVariantType',
+            SelectOptions: [{
+                $Type       : 'UI.SelectOptionType',
+                PropertyName: TravelStatus_code,
+                Ranges      : [{
+                    $Type : 'UI.SelectionRangeType',
+                    Sign  : #I,
+                    Option: #EQ,
+                    Low   : 'A',
+                }, ],
+            }],
+        },
+        Text               : '{i18n>Accepted}',
+    },
+    UI.SelectionPresentationVariant #tableView2: {
+        $Type              : 'UI.SelectionPresentationVariantType',
+        PresentationVariant: {
+            $Type         : 'UI.PresentationVariantType',
+            Visualizations: ['@UI.LineItem#tableView1', ],
+        },
+        SelectionVariant   : {
+            $Type        : 'UI.SelectionVariantType',
+            SelectOptions: [{
+                $Type       : 'UI.SelectOptionType',
+                PropertyName: TravelStatus_code,
+                Ranges      : [{
+                    $Type : 'UI.SelectionRangeType',
+                    Sign  : #I,
+                    Option: #EQ,
+                    Low   : 'X',
+                }, ],
+            }],
+        },
+        Text               : '{i18n>Canceled}',
+    },
+     UI.LineItem #tableView : [ 
+        { 
+            $Type : 'UI.DataFieldForAction', 
+            Action : 'TravelService.rejectTravel', 
+            Label : '{i18n>RejectTravel}', 
+        }, 
+        { 
+            $Type : 'UI.DataField', 
+            Value : Description, 
+        }, 
+        { 
+            $Type : 'UI.DataField', 
+            Value : LastChangedAt, 
+        }, 
+        { 
+            $Type : 'UI.DataField', 
+            Value : TravelID, 
+        }, 
+        { 
+            $Type : 'UI.DataField', 
+            Value : to_Customer_CustomerID, 
+        },
+        {
+                $Type            : 'UI.DataField',
+                Value            : TravelStatus_code,
+                Criticality      : TravelStatus.criticality,
+                ![@UI.Importance]: #High
+        },
+    ],
+    UI.LineItem #tableView1 : [ 
+        {
+            $Type: 'UI.DataField', 
+            Value: Description, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: LastChangedAt, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: TravelID, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: to_Agency_AgencyID, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: to_Customer_CustomerID, 
+        },
+        {
+                $Type            : 'UI.DataField',
+                Value            : TravelStatus_code,
+                Criticality      : TravelStatus.criticality,
+                ![@UI.Importance]: #High
+        },
+    ],
+    UI.LineItem #tableView2 : [
+        {
+            $Type: 'UI.DataField', 
+            Value: Description, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: LastChangedAt, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: TravelID, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: to_Agency_AgencyID, 
+        }, 
+        { 
+            $Type: 'UI.DataField', 
+            Value: to_Customer_CustomerID, 
+        },
+        {
+            $Type            : 'UI.DataField',
+            Value            : TravelStatus_code,
+            Criticality      : TravelStatus.criticality,
+            ![@UI.Importance]: #High
+        },
+    ],
+    UI.SelectionPresentationVariant #tableView3 : {
+        $Type : 'UI.SelectionPresentationVariantType',
+        PresentationVariant : {
+            $Type : 'UI.PresentationVariantType',
+            Visualizations : [
+                '@UI.LineItem#tableView2',
+            ],
+        },
+        SelectionVariant : {
+            $Type : 'UI.SelectionVariantType',
+            SelectOptions : [
+                {
+                    $Type : 'UI.SelectOptionType',
+                    PropertyName : TravelStatus_code,
+                    Ranges : [
+                        {
+                            $Type : 'UI.SelectionRangeType',
+                            Sign : #I,
+                            Option : #EQ,
+                            Low : 'O',
+                        },
+                    ],
+                },
+            ],
+        },
+        Text : '{i18n>Open2}',
     },
 );
 
