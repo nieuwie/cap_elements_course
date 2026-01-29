@@ -21,7 +21,12 @@ annotate TravelService.Travel with @(
                 $Type : 'UI.DataFieldForAction',
                 Action: 'TravelService.rejectTravel',
                 Label : '{i18n>RejectTravel}'
-            }
+            },
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action : 'TravelService.deductDiscount',
+                Label : '{i18n>Deductdiscount}',
+            },
         ],
         HeaderInfo            : {
             TypeName      : '{i18n>Travel}',
@@ -360,6 +365,43 @@ annotate TravelService.Travel with @(
             ],
         },
         Text : '{i18n>Open2}',
+    },
+    UI.DataPoint #TotalPrice : {
+        $Type : 'UI.DataPointType',
+        Value : TotalPrice,
+        Title : '{i18n>Totalprice}',
+    },
+    UI.HeaderFacets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'TotalPrice',
+            Target : '@UI.DataPoint#TotalPrice',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'BookingFee',
+            Target : '@UI.DataPoint#BookingFee',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'TravelStatus_code',
+            Target : '@UI.DataPoint#TravelStatus_code',
+        },
+    ],
+    UI.DataPoint #BookingFee : {
+        $Type : 'UI.DataPointType',
+        Value : BookingFee,
+        Title : '{i18n>Bookingfee}',
+    },
+    UI.FieldGroup #PricingDetails : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+        ],
+    },
+    UI.DataPoint #TravelStatus_code : {
+        $Type : 'UI.DataPointType',
+        Value : TravelStatus_code,
+        Title : '{i18n>Travelstatuscode}',
     },
 );
 
