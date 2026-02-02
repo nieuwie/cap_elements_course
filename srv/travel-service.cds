@@ -57,6 +57,8 @@ service TravelService @(path:'/processor') {
 
   // Ensure all masterdata entities are available to clients
   annotate my.MasterData with @cds.autoexpose @readonly;
+
+  entity SupplementScope as projection on my.SupplementScope;
 }
 
 type Percentage : Integer @assert.range: [1,100];

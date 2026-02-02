@@ -387,6 +387,11 @@ annotate TravelService.Travel with @(
             ID : 'TravelStatus_code',
             Target : '@UI.DataPoint#TravelStatus_code',
         },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'Progress',
+            Target : '@UI.DataPoint#progress',
+        },
     ],
     UI.DataPoint #BookingFee : {
         $Type : 'UI.DataPointType',
@@ -402,6 +407,14 @@ annotate TravelService.Travel with @(
         $Type : 'UI.DataPointType',
         Value : TravelStatus_code,
         Title : '{i18n>Travelstatuscode}',
+    },
+    UI.DataPoint #progress : {
+        $Type : 'UI.DataPointType',
+        Value : Progress,
+        Title : 'Progress',
+        TargetValue : 100,
+        Visualization : #Progress,
+        Description : '{i18n>Progress}',
     },
 );
 
@@ -503,6 +516,40 @@ annotate TravelService.Booking with @(
             },
         ],
     },
+    UI.DataPoint #TotalSupplPrice1 : {
+        Value : TotalSupplPrice,
+        MinimumValue : {$edmJson: {$Path: '/SupplementScope/MinimumValue'}},
+        MaximumValue : {$edmJson: {$Path: '/SupplementScope/MaximumValue'}},
+        TargetValue: {$edmJson: {$Path: '/SupplementScope/TargetValue'}},
+        CriticalityCalculation : {
+            Type : 'UI,CriticalityCalculation',
+            ImprovementDirection : #Maximize,
+            ToleranceRangeLowValue : {$edmJson: {$Path: '/SupplementScope/ToleranceRangeLowValue'}},
+            DeviationRangeLowValue : {$edmJson: {$Path: '/SupplementScope/DeviationRangeLowValue'}}
+        }
+    },
+    UI.Chart #TotalSupplPrice1 : {
+        ChartType : #Bullet,
+        Title : 'TotalSupplPrice',
+        Measures : [
+            TotalSupplPrice,
+        ],
+        MeasureAttributes : [
+            {
+                DataPoint : '@UI.DataPoint#TotalSupplPrice1',
+                Role : #Axis1,
+                Measure : TotalSupplPrice,
+            },
+        ],
+        Description : '{i18n>Totalsupplements}'
+    },
+    UI.HeaderFacets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'TotalSupplPrice',
+            Target : '@UI.Chart#TotalSupplPrice1',
+        },
+    ],
 );
 
 annotate TravelService.BookingSupplement with @UI: {
