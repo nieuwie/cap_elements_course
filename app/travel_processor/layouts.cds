@@ -1,6 +1,8 @@
 using TravelService from '../../srv/travel-service';
 using from '../../db/schema';
 using from '../../db/master-data';
+using from './value-helps';
+
 
 
 
@@ -121,10 +123,17 @@ annotate TravelService.Travel with @(
             }
         ],
         FieldGroup #TravelData: {Data: [
-            {Value: TravelID},
             {Value: to_Agency_AgencyID},
             {Value: to_Customer_CustomerID},
-            {Value: Description}
+            {Value: Description},
+            {
+                $Type : 'UI.DataField',
+                Value : BeginDate,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : EndDate,
+            },
         ]},
         FieldGroup #DateData  : {Data: [
             {
@@ -610,4 +619,62 @@ annotate TravelService.TravelAgency with @(
         ],
     }
 );
+
+annotate TravelService.Travel with {
+    Description @UI.MultiLineText : true
+                @UI.Placeholder  : '{i18n>DescrPlcehlder}'
+};
+
+annotate TravelService.Booking with {
+    ConnectionID @(
+        Common.ValueList : {
+            CollectionPath : 'Flight',
+            Label : '',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    ValueListProperty : 'AirlineID',
+                    LocalDataProperty : to_Carrier_AirlineID,
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : ConnectionID,
+                    ValueListProperty : 'ConnectionID',
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    ValueListProperty : 'FlightDate',
+                    LocalDataProperty : FlightDate,
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    ValueListProperty : 'Price',
+                    LocalDataProperty : FlightPrice,
+                },
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    ValueListProperty : 'CurrencyCode_code',
+                    LocalDataProperty : CurrencyCode_code,
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'to_Airline/Name',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'PlaneType',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'MaximumSeats',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'OccupiedSeats',
+                },
+            ],
+            PresentationVariantQualifier : 'SortOrderPV',
+        },
+        Common.ValueListWithFixedValues : true,
+)};
 
